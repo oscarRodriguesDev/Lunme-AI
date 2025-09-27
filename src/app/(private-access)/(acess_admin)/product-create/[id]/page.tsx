@@ -83,7 +83,7 @@ const ProductCreatePage: React.FC = () => {
 
   return (
     <>
-    <div className="max-w-7xl mx-auto mt-10 bg-[#0F1113] shadow-lg rounded-lg p-8">
+    <div className="max-w-7xl mx-auto mt-1 bg-[#0F1113] shadow-lg rounded-lg p-8">
       <h1 className="text-2xl font-bold mb-6 text-center text-[#E6FAF6]">
         Criar Novo Produto de Créditos
       </h1>

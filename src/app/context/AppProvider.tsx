@@ -37,7 +37,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const MenuItem: React.FC<MenuItemProps> = ({ icon, label, onClick }) => (
     <div
     className="
-      flex items-center py-3 px-4 space-x-3
+      flex items-center py-1 px-2 space-x-3
       border-b border-[#33564F]
       rounded-md
       text-[#E6FAF6]

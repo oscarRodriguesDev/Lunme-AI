@@ -22,7 +22,7 @@ const config: Config = {
     },
     extend: {
       colors: {
-        background: "var(--background)",
+        background: "#0A4D4D",
         foreground: "var(--foreground)",
 
         // Tema Tivi substituído pela sua paleta
@@ -52,14 +52,7 @@ const config: Config = {
           400: "#0A4D4D",
         },
 
-        // Branco / Cinza Claro (textos)
-        light: {
-          50: "##009E9D",
-          100: "#F2F2F2",
-          200: "#E0E0E0",
-          300: "#1E6F6F",
-          400: "#0A4D4D",
-        },
+    
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
