@@ -1,5 +1,5 @@
 // middleware.ts
-import { withAuth } from "next-auth/middleware";
+/* import { withAuth } from "next-auth/middleware";
 
 export default withAuth({
   pages: {
@@ -18,11 +18,11 @@ export const config = {
     "/app/:path*",        // protege toda a área logada
     "/api/internal/:path*", // protege apenas APIs internas
   ],
-};
+}; */
  
 
 // middleware.ts
-/* import { withAuth } from "next-auth/middleware";
+ import { withAuth } from "next-auth/middleware";
 
 export default withAuth({
   pages: {
@@ -34,5 +34,5 @@ export default withAuth({
 });
 
 // sem matcher → nada é protegido
-export const config = {}; */
+export const config = {}; 
 
