@@ -1,4 +1,4 @@
-
+// middleware.ts
 import { withAuth } from "next-auth/middleware";
 
 export default withAuth({
@@ -7,7 +7,7 @@ export default withAuth({
   },
   callbacks: {
     authorized: ({ token }) => {
-      // Apenas permite se o usuário estiver autenticado (token presente)
+      // Só permite se o usuário estiver autenticado
       return !!token;
     },
   },
@@ -15,10 +15,11 @@ export default withAuth({
 
 export const config = {
   matcher: [
-    "/app/:path*",
-    "/api/internal/:path*",   // Protege rotas API internas
+    "/app/:path*",        // protege toda a área logada
+    "/api/internal/:path*", // protege apenas APIs internas
   ],
-};  
+};
+ 
 
 // middleware.ts
 /* import { withAuth } from "next-auth/middleware";
