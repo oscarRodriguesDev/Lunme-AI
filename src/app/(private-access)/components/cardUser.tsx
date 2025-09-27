@@ -70,14 +70,7 @@ const CardUser: React.FC<CardUserProps> = ({ darkMode }) => {
     >
       {status === "authenticated" ? (
         <>
-          <Image
-            src={fotoPerfil || userDefault}
-            alt="Foto de perfil"
-            width={40}
-            height={40}
-            quality={100}
-            className="rounded-full border border-[#55FF00]/40"
-          />
+          <div className="rounded-full w-[40px] h-[40px] border border-[#55FF00]/40 overflow-hidden bg-center bg-cover" style={{ backgroundImage: `url('${fotoPerfil || userDefault.src || userDefault}')` }} />
           <span className="text-sm font-semibold text-[#E6FAF6] truncate max-w-[130px]">
             {session.user?.name}
           </span>

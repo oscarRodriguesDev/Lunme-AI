@@ -21,18 +21,21 @@ export const config = {
 }; */
  
 
-// middleware.ts
- import { withAuth } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
 
 export default withAuth({
   pages: {
     signIn: "/login",
   },
   callbacks: {
-    authorized: () => true, // libera tudo
+    // Só permite se o usuário estiver autenticado (token presente)
+    authorized: ({ token }) => !!token,
   },
 });
 
-// sem matcher → nada é protegido
-export const config = {}; 
-
+// Protege apenas as rotas internas da API
+export const config = {
+  matcher: [
+    "/api/internal/:path*",
+  ],
+};

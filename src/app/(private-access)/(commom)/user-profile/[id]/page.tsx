@@ -23,8 +23,6 @@ const Perfil = () => {
 
     const { role } = useAccessControl()
 
-
-
     //busca de dados
     async function fetchUserData(userId: string) {
         try {
@@ -69,31 +67,27 @@ const Perfil = () => {
         setEditando(false);
     };
 
-
-
-  
-
     const handleProfilePictures = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-    
+
         try {
             const fileData = new FormData();
             fileData.append("file", file);
-    
+
             const res = await fetch(`/api/internal/uploads/profile/?path=profile-pictures&id=${id}`, {
                 method: "POST",
                 body: fileData,
             });
-              alert(id)
+            // alert(id) // Removido o alert para não atrapalhar UX
             if (!res.ok) {
                 const error = await res.json();
                 throw new Error(error.error || "Erro no upload");
             }
-    
+
             const data = await res.json();
             showSuccessMessage("Foto carregada. Clique em salvar para aplicar.");
-    
+
             setFormData((prevFormData) =>
                 prevFormData ? { ...prevFormData, photoprofile: data.url } : null
             );
@@ -101,30 +95,29 @@ const Perfil = () => {
             showErrorMessage("Erro ao carregar a foto.");
         }
     };
-    
 
     const handleBanner = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-    
+
         try {
             const fileData = new FormData();
             fileData.append("file", file);
-            alert(id)
-    
+            // alert(id) // Removido o alert para não atrapalhar UX
+
             const res = await fetch(`/api/internal/uploads/profile/?path=banner&id=${id}`, {
                 method: "POST",
                 body: fileData,
             });
-    
+
             if (!res.ok) {
                 const error = await res.json();
                 throw new Error(error.error || "Erro no upload");
             }
-    
+
             const data = await res.json();
             showSuccessMessage("Banner carregado. Clique em salvar para aplicar.");
-    
+
             setFormData((prevFormData) =>
                 prevFormData ? { ...prevFormData, banner: data.url } : null
             );
@@ -132,14 +125,13 @@ const Perfil = () => {
             showErrorMessage("Erro ao carregar o banner.");
         }
     };
-    
 
     const handleUpdate = async () => {
         if (!formData) return;
         try {
             const { id, ...restOfFormData } = formData;
             const payload = { id: psicologo?.id, ...restOfFormData };
-    
+
             const res = await fetch(`/api/internal/user-profile`, {
                 method: "PUT",
                 headers: {
@@ -147,11 +139,11 @@ const Perfil = () => {
                 },
                 body: JSON.stringify(payload),
             });
-    
+
             if (!res.ok) {
                 throw new Error("Erro ao atualizar perfil");
             }
-    
+
             const updatedUser = await res.json();
             setPsicologo(updatedUser);
             showSuccessMessage("Perfil atualizado com sucesso!");
@@ -159,10 +151,6 @@ const Perfil = () => {
             showErrorMessage("Falha ao atualizar perfil. Tente novamente.");
         }
     };
-    
-
-
-
 
     if (!psicologo || !formData) {
         return (
@@ -190,21 +178,22 @@ const Perfil = () => {
                     className="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/2 z-20 flex flex-col items-center"
                     style={{ pointerEvents: "none" }}
                   >
-                    <div className="relative">
+                    <div className="relative" style={{ pointerEvents: "auto" }}>
                       <Image
                         src={formData.photoprofile || userDefault}
                         alt="imagem de perfil"
                         width={110}
                         height={110}
                         className="w-28 h-28 rounded-full object-cover border-4 border-[#1D3330] shadow-lg bg-[#1D3330]"
-                        style={{ pointerEvents: "auto" }}
                       />
+                      {/* Corrigido: opção de substituir foto de perfil aparece corretamente quando editando */}
                       {editando && (
                         <div className="absolute bottom-0 right-0">
-                          <label htmlFor="profile-photo-input" className="cursor-pointer bg-[#3D975B] text-[#0F1113] rounded-full p-1 shadow border-2 border-white">
+                          <label htmlFor="profile-photo-input" className="cursor-pointer bg-[#3D975B] text-[#0F1113] rounded-full p-1 shadow border-2 border-white flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2a2.828 2.828 0 11-4-4 2.828 2.828 0 014 4z" />
                             </svg>
+                            <span className="ml-1 text-xs">Alterar</span>
                             <input
                               type="file"
                               id="profile-photo-input"
@@ -332,8 +321,6 @@ const Perfil = () => {
               </div>
             )}
           </>
-        
-          
         );
 };
 
