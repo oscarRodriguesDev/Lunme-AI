@@ -20,7 +20,7 @@ export default function ViewDay({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div className="bg-[#0F1113] p-6 rounded-2xl shadow-2xl w-full max-w-2xl relative text-[#E6FAF6] max-h-[90vh] overflow-y-auto">
+        <div className="bg-[#414a52] p-6 rounded-2xl shadow-2xl w-full max-w-2xl relative text-[#E6FAF6] max-h-[90vh] overflow-y-auto">
       
           {/* Botão fechar */}
           <button

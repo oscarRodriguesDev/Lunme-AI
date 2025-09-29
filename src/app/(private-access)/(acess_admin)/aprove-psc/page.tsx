@@ -191,7 +191,7 @@ const toggleAtivo = (id: string) => {
         {error && <p className="text-red-500">{error}</p>}
   
         {!loading && !error && psicologos.length === 0 && (
-          <p className="text-[#253733]">Nenhum psicólogo encontrado.</p>
+          <p className="text-[#8ebcb2]">Nenhum psicólogo encontrado.</p>
         )}
   
         {/* Tabela de psicólogos */}

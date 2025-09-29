@@ -321,7 +321,7 @@ const MeusPacientes = () => {
               <td className="px-4 py-2">{item.convenio}</td>
               <td className="px-4 py-2">
                 <FaFileAlt
-                  className="text-[#55FF00] hover:text-[#33FF00] cursor-pointer"
+                  className="text-[#ffffff] hover:text-[#acadac] cursor-pointer"
                   onClick={() => {
                     setIdPac(item.id)
                     setModalOpen(true)

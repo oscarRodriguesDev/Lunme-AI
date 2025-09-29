@@ -108,7 +108,7 @@ function AuthGuard({ children }: { children: React.ReactNode }) {
 
 
   if (status === "loading") {
-    return <p>Carregando...</p>;
+    return <></>
   }
 
   return <>{children}</>;

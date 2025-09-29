@@ -93,7 +93,7 @@ const handleSubmit = async (event: React.FormEvent): Promise<void> => {
   <HeadPage title="Novo Administrador" icon={<FaUserCheck size={20} />} />
 
   {role === 'ADMIN' ? (
-    <div className="max-w-lg mx-auto p-6 bg-[#1E1E1E] rounded-lg shadow-lg border border-[#333333]">
+    <div className="max-w-lg mt-[10%] mx-auto p-6 bg-[#1E1E1E] rounded-lg shadow-lg border border-[#333333]">
       <h2 className="text-xl font-bold mb-4 text-[#E6FAF6]">Cadastro de Usuário</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">

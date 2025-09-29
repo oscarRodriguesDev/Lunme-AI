@@ -272,8 +272,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   return (
 <>
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-    <div className="relative bg-[#0F1113] rounded-lg w-full max-w-[787px] h-full max-h-[90vh] p-6 overflow-y-auto text-white">
+  <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-50">
+    <div className="relative bg-[#292727] rounded-lg w-full max-w-[787px] h-full max-h-[90vh] p-6 overflow-y-auto text-white">
 
       {/* Header */}
       <div className="flex items-center justify-start gap-2 mb-3">

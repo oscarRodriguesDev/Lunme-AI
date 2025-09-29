@@ -34,18 +34,18 @@ export default function ViewSemanal({ agendamentos, onDelete, onEdit }: ViewSema
     }, [offsetSemanal]);
 
     return (
-        <div className="bg-[#0F1113] text-[#E6FAF6] p-4 max-h-[480px] overflow-y-auto rounded-xl shadow-2xl">
+        <div className="bg-[#2f363c] text-[#E6FAF6] p-4 max-h-[480px] overflow-y-auto rounded-xl shadow-2xl">
         <div className="flex justify-between items-center mb-4">
           <button
             onClick={() => setOffsetSemanal((prev) => prev - 1)}
-            className="bg-[#33564F] hover:bg-[#55FF00] text-[#0F1113] font-bold py-1 px-3 rounded transition"
+            className="bg-[#2fd1d6] hover:bg-[#55FF00] text-[#0F1113] font-bold py-1 px-3 rounded transition"
           >
             ⬅ Semana anterior
           </button>
           <h2 className="text-xl font-semibold text-[#55FF00]">Agendamentos da Semana</h2>
           <button
             onClick={() => setOffsetSemanal((prev) => prev + 1)}
-            className="bg-[#33564F] hover:bg-[#55FF00] text-[#0F1113] font-bold py-1 px-3 rounded transition"
+            className="bg-[#2fd1d6] hover:bg-[#55FF00] text-[#0F1113] font-bold py-1 px-3 rounded transition"
           >
             Semana seguinte ➡
           </button>

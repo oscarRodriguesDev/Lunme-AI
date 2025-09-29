@@ -103,7 +103,7 @@ export default function LoginPage() {
           autoComplete="email"
           onBlur={() => {
             if (!email.includes('@') || !email.endsWith('.com.br')) {
-              setAviso("Por favor, informe um e-mail válido contendo '@' e terminando com '.com.br'");
+              setAviso("Por favor, informe um e-mail válido!");
             } else {
               setAviso("");
             }
@@ -131,7 +131,7 @@ export default function LoginPage() {
             }}
           />
 
-          <p className="absolute -mt-2 text-xs text-red-500 p-2 text-center">
+          <p className="absolute  text-xs text-[#ff1515] p-2 text-center">
             {aviso}
           </p>
 

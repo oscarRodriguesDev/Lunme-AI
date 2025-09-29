@@ -41,9 +41,9 @@ const ViewMes: React.FC<ViewMesProps> = ({ agendamentos, onDayClick }) => {
     <div className="flex flex-col items-center justify-center text-[#E6FAF6] p-4 rounded-xl shadow-2xl w-full max-w-xl mx-auto bg-[#0F1113]">
   
     <div className="flex justify-between items-center w-full mb-4">
-      <button onClick={voltarMes} className="px-4 py-2 bg-[#33564F] text-[#55FF00] rounded hover:bg-[#147D43] transition">← Anterior</button>
+      <button onClick={voltarMes} className="px-4 py-2 bg-[#2fd1d6] text-[#0e1b07] rounded hover:bg-[#147D43] transition">← Anterior</button>
       <h2 className="text-xl font-semibold">{nomeMeses[mesAtual]} {anoAtual}</h2>
-      <button onClick={avancarMes} className="px-4 py-2 bg-[#33564F] text-[#55FF00] rounded hover:bg-[#147D43] transition">Próximo →</button>
+      <button onClick={avancarMes} className="px-4 py-2 bg-[#2fd1d6] text-[#0e1b07] rounded hover:bg-[#147D43] transition">Próximo →</button>
     </div>
   
     <table className="w-full border-collapse">

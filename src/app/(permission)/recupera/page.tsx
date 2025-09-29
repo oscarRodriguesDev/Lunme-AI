@@ -53,10 +53,8 @@ const RecuperarSenha = () => {
   return (
     <>
     <div className="min-h-screen flex items-center justify-center bg-[#111111] px-4 relative overflow-hidden">
-      {/* Texto Lunme no fundo */}
-      <div className="absolute text-[100px] sm:text-[140px] lg:text-[180px] font-bold text-[#1DD1C1] opacity-10 select-none pointer-events-none z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
-      Lunme
-      </div>
+
+  
   
       {/* Conteúdo principal acima do fundo */}
       <div className="relative z-10 w-full max-w-md bg-[#1E1E1E] rounded-2xl shadow-lg p-8 border border-[#333333]">

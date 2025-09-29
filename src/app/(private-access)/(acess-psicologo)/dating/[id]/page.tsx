@@ -427,7 +427,7 @@ export default function AgendamentoPage() {
           <div className="w-full mt-5 flex justify-center">
             <button
               onClick={handleOpenModal}
-              className="px-6 py-3 bg-[#33564F] hover:bg-[#55FF00] text-[#0F1113] rounded-lg shadow-md transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#55FF00] focus:ring-opacity-50"
+              className="px-6 py-3 bg-[#30d9cb] hover:bg-[#55FF00] text-[#0F1113] rounded-lg shadow-md transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#55FF00] focus:ring-opacity-50"
             >
               Agendar
             </button>

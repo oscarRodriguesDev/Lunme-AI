@@ -19,7 +19,7 @@ export default function LandingPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#0a2e2e]">
       <h1 className="text-6xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0A4D4D] to-[#1FAFAF] animate-glow">
-        Lunme
+        Lunme 
       </h1>
 
       <style jsx>{`

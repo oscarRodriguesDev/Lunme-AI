@@ -82,7 +82,7 @@ export default function HistoricoPage() {
   <HeadPage title="Histórico" icon={<FaList size={20} />} />
 
   <div className="p-6 max-w-4xl mx-auto">
-    <h1 className="text-2xl font-bold mb-6 text-gray-800">Histórico de Ações</h1>
+    <h1 className="text-2xl font-bold mb-6 text-gray-400">Histórico de Ações</h1>
     <ul className="space-y-4">
       {historicos.map((h) => (
         <li
