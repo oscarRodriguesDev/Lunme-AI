@@ -54,11 +54,23 @@ const Menu: React.FC = () => {
           { icon: <LuLibraryBig size={22} />, label: "Base Científica", route: `/cientific/${id}` },
           { icon: <BsCreditCard2BackFill size={22} />, label: "Créditos", route: `/credit/${id}` },
           { icon: <FaHourglassHalf size={22} />, label: "Link Temporário", route: `/temp-link/${id}` },
-        ] : [
           { icon: <MdSpaceDashboard size={22} />, label: "Dashboard", route: `/dashboard/${id}` },
-          { icon: <PiUserCheckFill size={22} />, label: "Novos Psicólogos", route: '/aprove-psc' },
-          { icon: <GrUserAdmin size={22} />, label: "Novo Administrador", route: '/novo_admin' },
-          { icon: <GrDiamond size={22} />, label: "Novo Produto", route: `/product-create/${id}` },
+        ] : [
+          
+          ...(role === 'ADMIN'
+            ? [
+              { icon: <MdSpaceDashboard size={22} />, label: "Dashboard", route: `/dashboard/${id}` },
+                { icon: <PiUserCheckFill size={22} />, label: "Novos Psicólogos", route: '/aprove-psc' },
+                { icon: <GrDiamond size={22} />, label: "Novo Produto", route: `/product-create/${id}` },
+                { icon: <GrUserAdmin size={22} />, label: "Novo Administrador", route: '/novo_admin' },
+              ]
+              : role === 'PISICOLOGO_ADM'
+              ? [
+              { icon: <GrUserAdmin size={22} />, label: "Novo Administrador", route: '/novo_admin' },
+              
+              ]
+            : []
+          ),
         ]).map((item, idx) => (
           <MenuItem
             key={idx}

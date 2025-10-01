@@ -81,7 +81,7 @@ export default function AvaliacaoReuniao() {
     <div
       className="min-h-screen bg-black/90 text-white flex items-center justify-center px-4 relative"
       style={{
-        backgroundImage: `url("/marca/big_icon_tiviai.png")`,
+        backgroundImage: `url("/marca/big-logo.png")`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "1500px",

@@ -13,7 +13,7 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Tivi-AI API",
+      title: "Lunme",
       version: "1.0.0",
       description: "Documentação da API (OpenAPI 3) gerada com swagger-jsdoc",
     },

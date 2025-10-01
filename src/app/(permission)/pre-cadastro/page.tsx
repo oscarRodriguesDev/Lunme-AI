@@ -283,7 +283,7 @@ const Cadastro = () => {
               <div className="w-full bg-[#1E6F6F] border border-[#0A4D4D] rounded-lg flex flex-col sm:flex-row items-center gap-4 px-4 py-4">
                 <BsFillFileEarmarkMedicalFill size={40} color="#1DD1C1" />
                 <h1 className="text-xl sm:text-2xl font-extrabold text-center sm:text-left text-[#A7FFF7]">
-                  Sou psicólogo e quero usar todo o poder do Tivi AI
+                  Sou psicólogo e quero usar todo o poder do Lunme
                 </h1>
               </div>
       

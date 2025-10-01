@@ -96,7 +96,7 @@ export default function LoginPage() {
         <input
           type="email"
           required
-          placeholder="email@tiviai.com.br"
+          placeholder="email@lunme.com.br"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

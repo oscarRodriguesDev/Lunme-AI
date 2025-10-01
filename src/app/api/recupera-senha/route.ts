@@ -38,11 +38,12 @@ async function notificar(email: string, nome: string, email_system: string, senh
   });
 
   const mailOptions = {
-    from: 'noreply.tiviai@gmail.com',
+    from: process.env.EMAIL_RESPONSE,
     to: email,
     subject: 'Recuperação de Senha',
     text: `Olá ${nome},\n\n
-    Recentemente voce solicitou a recuperação da sua senha no Tivi AI. Estamos enviando uma senha provisória para que você possa acessar sua conta.\n\n
+    Recentemente voce solicitou a recuperação da sua senha no Lunme.
+     Estamos enviando uma senha provisória para que você possa acessar sua conta.\n\n
     Aqui estão os dados para login:
   
     Email: ${email_system}
@@ -51,7 +52,7 @@ async function notificar(email: string, nome: string, email_system: string, senh
     Após o primeiro login, por favor, altere sua senha para garantir a segurança da sua conta.\n\n
     Se você não solicitou essa recuperação, por favor, ignore este e-mail ou entre em contato conosco.\n\n
     Atenciosamente,\n
-    Equipe Tivi AI`
+    Equipe Lunme`
   };
   
   try {

@@ -262,18 +262,18 @@ async function notificar(email: string, nome: string, email_system: string, senh
   });
 
   const mailOptions = {
-    from: 'noreply.tiviai@gmail.com', // trocar esse email urgente
+    from: process.env.EMAIL_RESPONSE, // trocar esse email urgente
     to: email,
     subject: 'Cadastro Habilitado no Lunme',
     text: `Prezado(a) ${nome},\n\n
-  É com prazer que informamos que seu cadastro como psicólogo foi habilitado com sucesso na plataforma Tivi AI.\n\n
+  É com prazer que informamos que seu cadastro como psicólogo foi habilitado com sucesso na plataforma Lunme.\n\n
   Abaixo, seguem seus dados de acesso para completar seu cadastro e iniciar sua jornada na plataforma:\n\n
   Email: "${email_system}"\n
   Senha: ${senha}\n\n
   Para sua segurança, recomendamos que, ao acessar a plataforma pela primeira vez, você altere sua senha. Isso garantirá a proteção do seu acesso e dados.\n\n
   Caso tenha alguma dúvida ou necessite de suporte, não hesite em nos contatar.\n\n
   Atenciosamente,\n
-  Equipe Tivi AI`
+  Equipe Lunme`
   };
 
   try {
@@ -294,16 +294,16 @@ async function reproveNotify(email: string, nome: string, email_system: string, 
   });
 
   const mailOptions = {
-    from: 'noreply.tiviai@gmail.com',
+    from: process.env.EMAIL_RESPONSE,
     to: email,
-    subject: 'Cadastro não aprovado - Tivi AI',
+    subject: 'Cadastro não aprovado - Lunme',
     text: `Prezado(a) ${nome},\n\n
-  Após análise das informações fornecidas no seu cadastro como psicólogo(a) na plataforma Tivi AI, infelizmente não foi possível aprová-lo neste momento.\n\n
+  Após análise das informações fornecidas no seu cadastro como psicólogo(a) na plataforma Lunme, infelizmente não foi possível aprová-lo neste momento.\n\n
   O motivo mais comum para a não aprovação está relacionado a dados incompletos ou inconsistentes. Recomendamos que você revise atentamente os dados informados (como nome completo, CPF, CRP, data de nascimento e informações de contato) e tente novamente o envio do cadastro.\n\n
   Estamos à disposição para esclarecer qualquer dúvida ou auxiliar no processo de regularização do seu cadastro.\n\n
-  Agradecemos seu interesse em fazer parte da Tivi AI.\n\n
+  Agradecemos seu interesse em fazer parte da Lunme.\n\n
   Atenciosamente,\n
-  Equipe Tivi AI`
+  Equipe Lunme`
   };
   
   try {
@@ -342,7 +342,7 @@ async function efetivarPsicologo(nome: string, lastname: string, email_confirm: 
     data: {
       name: nome,
       lastname: lastname,
-      email: `${cname}@Lunme.com.br`,
+      email: `${cname}@lunme.com.br`,
       email_confirm: email_confirm,
       password: hashedPassword,
       role: 'PSYCHOLOGIST',

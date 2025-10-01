@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { useState, useEffect, useId } from "react";
 import Image from "next/image";
 
-import capa_default from '../../../../../../public/patern_capa/tivia.jpg';
+import capa_default from '../../../../../../public/patern_capa/capa-lume.png'; //alterar capa padrão
 import userDefault from "../../../../../../public/profile_pictures_ps/userdefault.png";
 import AlteracaoSenha from "../components/trocar_senha";
 import { Psicologo } from "../../../../../../types/psicologos";

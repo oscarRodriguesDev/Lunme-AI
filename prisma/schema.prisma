@@ -186,6 +186,7 @@ model AcessoAnamneseTemp {
 
 enum UserRole {
   ADMIN
+  PISICOLOGO_ADM
   PSYCHOLOGIST
   COMMON
 }

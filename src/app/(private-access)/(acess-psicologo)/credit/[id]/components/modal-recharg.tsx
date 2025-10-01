@@ -360,7 +360,7 @@ export default function PaymentModal({ isOpen, onClose, produto }: PaymentModalP
             <select
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value as "pix" | "credit_card")}
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#127B42]"
+              className="w-full border text-black border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#127B42]"
             >
               <option value="pix">PIX</option>
               <option value="credit_card">Cartão de Crédito</option>
@@ -653,7 +653,7 @@ export default function PaymentModal({ isOpen, onClose, produto }: PaymentModalP
           )}
 
           {/* Botões */}
-          <div className="flex justify-end gap-3 sticky bottom-0 bg-white pt-4">
+          <div className="flex justify-end items-center gap-3 sticky bottom-0 bg-[#4a4a4ab8] pt-3 pb-3 pr-3">
             <button
               onClick={onClose}
               className="px-5 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-black font-medium transition"

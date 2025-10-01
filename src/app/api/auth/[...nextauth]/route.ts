@@ -106,7 +106,7 @@ const handler = NextAuth({
          throw new Error("Usuario ou senha incorretos!");
           //throw new Error("erro senha");
         }
-        if (![UserRole.ADMIN, UserRole.PSYCHOLOGIST, UserRole.COMMON].includes(user.role)) {
+        if (![UserRole.ADMIN, UserRole.PSYCHOLOGIST, UserRole.COMMON, UserRole.PISICOLOGO_ADM].includes(user.role)) {
           throw new Error("Acesso negado: este usuário não tem permissão.");
         }
         return user;

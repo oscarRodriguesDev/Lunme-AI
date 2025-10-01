@@ -39,9 +39,9 @@ const Creditos = () => {
     quantidade: number
   }
 
-/* primeria parte do fluxo, buscar as ordens salvas no banco */
+  /* primeria parte do fluxo, buscar as ordens salvas no banco */
 
-//represetna minha compra salva no banco de dados
+  //represetna minha compra salva no banco de dados
   interface Compra {
     id: string;
     userId: string;
@@ -63,13 +63,13 @@ const Creditos = () => {
     try {
       const res = await fetch(`/api/internal/payments/savepay?userId=${userId}`);
       if (!res.ok) {
-        
+
         return
       }
 
       const data: ComprasResponse = await res.json();
       setCompras(data.compras);
-     
+
       //como peegar os objetos, tem que percorrer as ordens
       console.log(data.compras[0].id); // aqui você verá o array completo
     } catch (error) {
@@ -87,7 +87,7 @@ const Creditos = () => {
 
 
 
-    
+
   //comprar creditos
   const handleComprar = (produto: Produto) => {
 
@@ -112,7 +112,7 @@ const Creditos = () => {
     }
   }
 
- 
+
 
 
 
@@ -157,23 +157,23 @@ const Creditos = () => {
       <HeadPage title="Créditos" icon={<FaRegCreditCard size={20} />} />
 
       {role === 'PSYCHOLOGIST' ? (
-        <div className="m-4 bg-white rounded-2xl shadow-lg p-6">
+        <div className="m-4 bg-[#243129] rounded-2xl shadow-lg p-6">
           {selectedProduto && (
             <>
-            
-            <PaymentModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              produto={selectedProduto}
-            />
+
+              <PaymentModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                produto={selectedProduto}
+              />
             </>
           )}
 
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Resumo de Créditos</h2>
+          <h2 className="text-xl font-semibold text-gray-100 mb-4">Resumo de Créditos</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-700">
             <div className="bg-blue-50 p-4 rounded-xl flex items-center justify-between shadow-sm">
               <div>
-                <p className="text-gray-500">Créditos disponíveis</p>
+                <p className="text-gray-800">Créditos disponíveis</p>
                 <p className="text-2xl font-bold text-blue-600">{credito} créditos</p>
               </div>
               <FaCoins size={32} className="text-blue-500" />
@@ -181,7 +181,7 @@ const Creditos = () => {
 
             <div className="bg-green-50 p-4 rounded-xl flex items-center justify-between shadow-sm">
               <div>
-                <p className="text-gray-500">Total recarregado</p>
+                <p className="text-gray-100">Total recarregado</p>
                 <p className="text-2xl font-bold text-green-600">
                   {recarga} créditos
                 </p>
@@ -199,35 +199,41 @@ const Creditos = () => {
           </div>
 
           {/* LISTA DE PRODUTOS */}
-          <h3 className="text-lg font-semibold text-gray-800 mt-8 mb-4">Escolha um pacote de créditos</h3>
+          <h3 className="text-lg font-semibold text-gray-100 mt-8 mb-4">Escolha um pacote de créditos</h3>
 
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {produtosList.map((produto) => (
               <div
                 key={produto.codigo}
-                className="relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 cursor-pointer flex flex-col items-center text-center p-6 border border-gray-100"
+                className="relative bg-[#9a9696] rounded-3xl shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-2 cursor-pointer flex flex-col items-center text-center p-6 border border-border"
               >
-
-
                 {/* Título */}
-                <h4 className="text-xl font-extrabold text-gray-900 mb-2">{produto.titulo}</h4>
+                <h4 className="text-xl font-extrabold text-foreground mb-2">
+                  {produto.titulo}
+                </h4>
 
                 {/* Quantidade de créditos */}
-                <div className="text-green-600 font-bold text-2xl mb-2">{produto.quantidade} Créditos</div>
+                <div className="text-secondary font-bold text-2xl mb-2">
+                  {produto.quantidade} Créditos
+                </div>
 
                 {/* Descrição */}
-                <p className="text-gray-500 text-sm mb-4">{produto.descricao}</p>
+                <p className="text-muted-foreground text-sm mb-4">
+                  {produto.descricao}
+                </p>
 
                 {/* Preço */}
-                <div className="bg-gray-100 w-full rounded-xl py-3 mb-6">
-                  <span className="text-xl font-bold text-gray-800">R$ {produto.preco.toFixed(2)}</span>
+                <div className="bg-muted w-full rounded-xl py-3 mb-6">
+                  <span className="text-xl font-bold text-black">
+                    R$ {produto.preco.toFixed(2)}
+                  </span>
                 </div>
 
                 {/* Botão Comprar */}
                 <button
                   onClick={() => handleComprar(produto)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200"
+                  className="w-full bg-primary hover:opacity-90 text-primary-foreground font-semibold py-3 rounded-xl shadow-md transition duration-200"
                 >
                   Comprar
                 </button>
@@ -246,7 +252,7 @@ const Creditos = () => {
 
       {/* Div para apresentar as ordens do usuário */}
       <div className="mt-12">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Minhas Ordens de Compra</h3>
+        <h3 className="text-lg font-semibold text-gray-100 mb-4">Minhas Ordens de Compra</h3>
         {/* Aqui você pode mapear e exibir as ordens do usuário */}
         {/* Exemplo estático, troque por dados reais depois */}
         <div className="bg-white rounded-xl shadow p-4">
