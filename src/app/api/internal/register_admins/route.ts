@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export async function POST(req: Request) {
   try {
     // Extraindo os dados do corpo da requisição
-    const { name, email, password, confirmPassword,role } = await req.json();
+    const { name, email, password, confirmPassword,role,vinculo_admin } = await req.json();
 
     // Verifica se os campos obrigatórios foram fornecidos
     if (!name || !email || !password || !confirmPassword || !role) {
@@ -38,6 +38,7 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         role: role, // Definindo o papel como ADMIN
+        vinculo_admin: vinculo_admin, //vinculo com outro user admin não obrigatorio
       },
     });
 

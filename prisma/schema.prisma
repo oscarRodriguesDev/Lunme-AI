@@ -23,6 +23,7 @@ model User {
   cpf           String?
   credit_card   String?
   creditos      String?
+  creditos_admin String? //credito compartilhavel com outros users vinculados ele
   crp           String?
   cvc           String?
   fantasy_name  String?
@@ -45,6 +46,7 @@ model User {
   lastname      String?
   pontuacao     Int[]
   compra        Compra[] //lista de compras porque pode comprar mais de uma vez
+  vinculo_admin String? //vinculo com outro user admin
 }
 
 model PrePsicologo {

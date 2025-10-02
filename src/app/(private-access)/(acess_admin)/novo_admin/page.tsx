@@ -1,11 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import HeadPage from "@/app/(private-access)/components/headPage";
 import { FaUserCheck } from "react-icons/fa";
 import { useAccessControl } from "@/app/context/AcessControl";
 import { showErrorMessage, showSuccessMessage } from "@/app/util/messages";
 
 export default function CadastroAdmin() {
+  // tipagem de roles
+  enum Role {
+    ADMIN = "ADMIN",
+    PISICOLOGO_ADM = "PISICOLOGO_ADM",
+    PSYCHOLOGIST = "PSYCHOLOGIST",
+    COMMON = "COMMON",
+  }
+
+  //recupera o id
+  const { userID } = useAccessControl() as {
+    userID: string | null;
+  };
+
   /**
    * useState para definição do perfil que está sendo criado
    */
@@ -14,11 +28,32 @@ export default function CadastroAdmin() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "ADMIN",
+    role: "",
+    vinculo_admin: userID,
   });
 
   const [loading, setLoading] = useState(false);
-  const { role, hasRole } = useAccessControl(); // role é string | null
+
+  // ⬇️ ajustamos aqui para considerar Role | null
+  const { role, hasRole } = useAccessControl() as {
+    role: Role | null;
+    hasRole: (r: Role) => boolean;
+    
+  };
+
+ 
+
+
+  const [useRole, setUseRole] = useState<Role>(Role.ADMIN);
+
+  // ✅ Agora comparação funciona, pois role é Role | null
+  useEffect(() => {
+    if (role === Role.PISICOLOGO_ADM) {
+      setUseRole(Role.PISICOLOGO_ADM);
+    } else {
+      setUseRole(Role.ADMIN);
+    }
+  }, [role]);
 
   /**
    * captura os valores dos campos de texto
@@ -48,6 +83,7 @@ export default function CadastroAdmin() {
       password: "",
       confirmPassword: "",
       role: "", // padrão
+      vinculo_admin: userID||'',
     });
   };
 
@@ -55,10 +91,9 @@ export default function CadastroAdmin() {
    * função envia os dados para o backend
    */
   const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-
     if (formData.role === "") {
-      showErrorMessage("Você precisa selecionar o tipo de usuario corretamente!");
-      return
+      showErrorMessage("Você precisa selecionar o tipo de usuário corretamente!");
+      return;
     }
     event.preventDefault();
     setLoading(true);
@@ -83,14 +118,13 @@ export default function CadastroAdmin() {
     }
   };
 
-  // garante que role sempre seja string
-  const currentRole = role ?? "";
+  const currentRole = role ?? null;
 
   return (
     <>
       <HeadPage title="Novo Administrador" icon={<FaUserCheck size={20} />} />
 
-      {["ADMIN", "PISICOLOGO_ADM"].includes(currentRole) ? (
+      {currentRole === Role.ADMIN || currentRole === Role.PISICOLOGO_ADM ? (
         <div className="max-w-lg mt-[10%] mx-auto p-6 bg-[#1E1E1E] rounded-lg shadow-lg border border-[#333333]">
           <h2 className="text-xl font-bold mb-4 text-[#E6FAF6]">
             Cadastro de Usuário
@@ -144,20 +178,19 @@ export default function CadastroAdmin() {
               className="w-full p-2 rounded border border-[#333333] bg-[#2A2A2A] text-[#E6FAF6] focus:outline-none focus:ring-2 focus:ring-[#1DD1C1]"
               required
             >
-              {currentRole === "ADMIN" ? (
+              {currentRole === Role.ADMIN ? (
                 <>
-                  <option value="">selecione o tipo de usuario</option>
-                  <option value="ADMIN">Administrador</option>
-                  <option value="PISICOLOGO_ADM">
+                  <option value="">selecione o tipo de usuário</option>
+                  <option value={Role.ADMIN}>Administrador</option>
+                  <option value={Role.PISICOLOGO_ADM}>
                     Psicólogo Administrador
                   </option>
-
-                  <option value="PSYCHOLOGIST">Psicólogo</option>
+                  <option value={Role.PSYCHOLOGIST}>Psicólogo</option>
                 </>
               ) : (
                 <>
-                  <option value="">selecione o tipo de usuario</option>
-                  <option value="PSYCHOLOGIST">Psicólogo</option>
+                  <option value="">selecione o tipo de usuário</option>
+                  <option value={Role.PSYCHOLOGIST}>Psicólogo</option>
                 </>
               )}
             </select>
