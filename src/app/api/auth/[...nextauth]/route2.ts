@@ -39,7 +39,7 @@ const authOptions: NextAuthOptions = {
           throw new Error("Senha incorreta.");
         }
 
-        if (![UserRole.ADMIN, UserRole.PSYCHOLOGIST, UserRole.COMMON].includes(user.role)) {
+        if (![UserRole.ADMIN, UserRole.PSYCHOLOGIST, UserRole.COMMON, UserRole.PISICOLOGO_ADM].includes(user.role)) {
           throw new Error("Acesso negado: este usuário não tem permissão.");
         }
 
