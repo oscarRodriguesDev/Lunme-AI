@@ -393,6 +393,10 @@ const limpaLivro = () => {
           </div>
   
           {/* Livros e artigos */}
+
+{/* livros e artigos */}
+          
+         {/*  <>
           <h3 className="text-[#55FF00] font-semibold">Livros e artigos adicionados</h3>
           <div className="w-full border border-[#33564F] p-4 flex flex-wrap gap-6 justify-start">
             {livros.length > 0 ? (
@@ -441,8 +445,6 @@ const limpaLivro = () => {
               ))
             )}
           </div>
-  
-          {/* Formulário adicionar livro/artigo */}
           <div className="bg-[#0F1113] rounded-xl shadow-md p-4 space-y-3 text-white">
             <h3 className="text-lg font-semibold text-[#55FF00]">Adicionar novo Livro ou Artigo</h3>
             <input
@@ -499,7 +501,11 @@ const limpaLivro = () => {
               </button>
             </div>
           </div>
+          </>
+ */}
+
   
+
           {/* Modelos de documentos */}
           <h3 className="text-[#55FF00] font-semibold">Modelos de documentos adicionados</h3>
           <div className="w-full border border-[#33564F] p-4 flex flex-wrap gap-2">
