@@ -354,4 +354,26 @@ Profissional Responsável
 
 `
 
-export {modelAV,modelRBT,modelTRT,modelDPT}
+//relatorio profissional
+ const modelRP =`
+ RELATÓRIO PSICOLÓGICO
+Identificação:
+Nome: [Nome completo ou nome social]
+Solicitante: [Instituição / profissional / próprio paciente]
+Finalidade: [Descrever o motivo do pedido]
+Profissional responsável: [Nome, CRP]
+Descrição da Demanda:
+[Descrever o motivo do atendimento e contexto da solicitação.]
+Procedimentos:
+[Informar métodos, técnicas e referenciais teóricos utilizados.]
+Análise:
+[Apresentar análise técnica e teórica dos dados observados.]
+Conclusão:
+[Descrever as conclusões e, se aplicável, encaminhamentos ou recomendações.]
+[Local], [data]
+____________________________________
+[Nome completo da(o) psicóloga(o)]
+CRP [número]
+ `
+
+export {modelAV,modelRBT,modelTRT,modelDPT, modelRP}
