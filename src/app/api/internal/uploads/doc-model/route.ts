@@ -80,10 +80,10 @@ export async function GET(req: Request) {
     const docs = await prisma.model_doc.findMany({
       where: { psicologoId },
     })
-
+   const mockDocs = Relatorios(psicologoId)
     // Se não houver documentos, usa os mockados
     if (!docs || docs.length === 0) {
-      const mockDocs = Relatorios(psicologoId)
+   
       return NextResponse.json(mockDocs, { status: 200 })
     }
      const todosDocs = [...docs, ...mockDocs]
