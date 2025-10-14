@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { modelDPT,modelAV,modelTRT,modelRBT } from "@/app/util/documents";
+import { modelDPT,modelAV,modelTRT,modelRBT,modelRP } from "@/app/util/documents";
 
 
 const prisma = new PrismaClient();
