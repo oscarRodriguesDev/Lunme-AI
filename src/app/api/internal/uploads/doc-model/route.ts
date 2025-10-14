@@ -56,6 +56,12 @@ const Relatorios = (idP: string) => [
     name: "AV",
     psicologoId: idP,
     prompt: modelAV
+  },
+  {
+    id: "5",
+    name: "RP",
+    psicologoId: idp,
+    prompt: modelRP
   }
 ]
 
