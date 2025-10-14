@@ -86,9 +86,9 @@ export async function GET(req: Request) {
       const mockDocs = Relatorios(psicologoId)
       return NextResponse.json(mockDocs, { status: 200 })
     }
-
+     const todosDocs = [...docs, ...mockDocs]
     // Retorna os docs do banco normalmente
-    return NextResponse.json(docs, { status: 200 })
+    return NextResponse.json(todosDocs, { status: 200 })
 
   } catch (error: any) {
     console.error('Erro ao buscar documentos:', error)
