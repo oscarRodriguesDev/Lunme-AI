@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { v4 as uuidv4 } from "uuid";
 import Peer, { MediaConnection } from "peerjs";
 import LiveTranscription from "../../dating/components/transcriptionPSC";;
@@ -19,6 +20,8 @@ interface Livro {
   id: string
   resumo: string
 }
+
+
 
 
 
@@ -42,6 +45,7 @@ const livromock = [
 
 export default function Home() {
 
+  const user = useSession();
   const [peerId, setPeerId] = useState<string>("");
   const { logAction } = useHistory();
   const [remoteId, setRemoteId] = useState<string>("")
@@ -78,7 +82,10 @@ export default function Home() {
       return newState;
     });
   }
-
+  const psicologo = user.data?.user?.name || 'N/A';
+  const crp =  user.data?.user?.crp || 'N/A';
+  console.log('CRP do psicólogo:', crp);
+  console.log('Nome do psicólogo:', psicologo);
 
   //vunção para ativar e desativar microfone
   function toggleMicrophone(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {

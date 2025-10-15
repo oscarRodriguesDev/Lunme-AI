@@ -88,6 +88,7 @@ const handler = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Senha", type: "password" },
         role: { label: "role", type: 'UserRole' },
+        crp: { label: "crp", type: 'string' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -122,6 +123,7 @@ const handler = NextAuth({
       if (user) {
         token.id = user.id
         token.role = user.role; // Adiciona o role do usuário ao token
+        token.crp = user.crp; 
       }
       return token;
     },
@@ -129,6 +131,7 @@ const handler = NextAuth({
       if (token) {
         session.user.role = token.role as UserRole;
         session.user.id = token.id as string;
+        session.user.crp = token.crp as string; // 👈 adicione isso
       }
       return session;
     },

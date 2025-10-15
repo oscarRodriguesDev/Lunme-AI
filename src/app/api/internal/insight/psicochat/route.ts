@@ -15,14 +15,19 @@ const openai = new OpenAI({
 
 
 export async function POST(req: Request) {
-  var retorno = ''
+  //var retorno = ''
 
   const { searchParams } = new URL(req.url);
-// const model = searchParams.get('prompt'); //parametnro
+  // const model = searchParams.get('prompt'); //parametnro
   const userId = searchParams.get("userId") as string;
+
+
   const {
     message: transcription,
-     prompt: model
+    prompt: model,
+    nomePaciente: nomePaciente,
+    nomePsicologo: nomePsicologo,
+    crpPsicologo: crpPsicologo
 
 
   } = await req.json();
@@ -32,17 +37,23 @@ export async function POST(req: Request) {
   const formattedDate = currentDate.toISOString().split('T')[0];
 
 
-  const prompt = generate(transcription, String(model))
+  const prompt = generate(transcription, String(model), nomePsicologo, crpPsicologo,nomePaciente);
 
   if (!transcription) {
     return NextResponse.json({ error: "Mensagem não fornecida." }, { status: 400 });
   }
-  const promptMessage = `${retorno} crie o documento solicitado para a seguinte transcrição: ${transcription} ao fim me fale dos materiais que se baseou`;
+  const promptMessage = `
+    ${prompt} 
+`
+
+
+
+  console.log("Prompt:", promptMessage);
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
-      temperature: 0.2,
+      temperature: 0.7,
       max_tokens: 2000
     });
 
@@ -52,6 +63,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ response: content });
 
   } catch (error: any) {
+    console.log(error)
     return NextResponse.json({ error: "Erro ao gerar resposta do modelo." }, { status: 500 });
   }
 }

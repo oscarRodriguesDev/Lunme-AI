@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { modelDPT,modelAV,modelTRT,modelRBT,modelRP } from "@/app/util/documents";
+import { modelRM, modelDC, modelPP, modelLP, modelRP, modelAP } from "@/app/util/documents";
 
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
-    const { name, psicologoId, prompt } = await req.json()
+    const { name, psicologoId, prompt,tool } = await req.json()
 
-    if (!name || !psicologoId || !prompt) {
+    if (!name || !psicologoId || !prompt||!tool) {
       return NextResponse.json(
         { error: 'Campos obrigatórios: name, psicologoId, prompt' },
         { status: 400 }
@@ -21,6 +21,7 @@ export async function POST(req: Request) {
         name,
         psicologoId,
         prompt,
+        tool,
       },
     })
 
@@ -35,33 +36,44 @@ export async function POST(req: Request) {
 const Relatorios = (idP: string) => [
   {
     id: "1",
-    name: "DPT",
+    name: "RM",
     psicologoId: idP,
-    prompt: modelDPT
+    prompt: modelRM,
+    tool: 'Relatório Multiprofissional'
   },
   {
     id: "2",
-    name: "TRT",
+    name: "PP",
     psicologoId: idP,
-    prompt: modelTRT
+    prompt: modelPP,
+    tool: 'Parecer Psicológico'
   },
   {
     id: "3",
-    name: "RBT",
+    name: "LP",
     psicologoId: idP,
-    prompt: modelRBT
+    prompt: modelLP,
+    tool: 'Laudo Psicológico'
   },
   {
     id: "4",
-    name: "AV",
+    name: "DC",
     psicologoId: idP,
-    prompt: modelAV
+    prompt: modelDC,
+    tool: 'Declaração'
   },
   {
-     id: "5",
+    id: "5",
     name: "RP",
     psicologoId: idP,
-    prompt: modelRP
+    prompt: modelRP,
+    tool: 'Relatório Psicológico'
+  }, {
+    id: "6",
+    name: "AP",
+    psicologoId: idP,
+    prompt: modelAP,
+    tool: 'Atestado Psicologico'
   }
 ]
 
@@ -80,13 +92,13 @@ export async function GET(req: Request) {
     const docs = await prisma.model_doc.findMany({
       where: { psicologoId },
     })
-   const mockDocs = Relatorios(psicologoId)
+    const mockDocs = Relatorios(psicologoId)
     // Se não houver documentos, usa os mockados
     if (!docs || docs.length === 0) {
-   
+
       return NextResponse.json(mockDocs, { status: 200 })
     }
-     const todosDocs = [...docs, ...mockDocs]
+    const todosDocs = [...docs, ...mockDocs]
     // Retorna os docs do banco normalmente
     return NextResponse.json(todosDocs, { status: 200 })
 

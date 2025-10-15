@@ -29,6 +29,7 @@ export async function useCredit(
   const currentCredits = Number(user.creditos) || 0;
 
   if (currentCredits < qtd) {
+    console.log("Créditos insuficientes.");
     throw new Error("Créditos insuficientes.");
   }
 

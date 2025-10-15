@@ -1,62 +1,88 @@
-export function generate(mensagem: string, model: string): string {
+export function generate(
+  mensagem: string,
+  model: string,
+  psicologo: string,
+  crp: string,
+  paciente: string
+): string {
   return `
-### 📌 INSTRUÇÕES GERAIS PARA A GERAÇÃO DE DOCUMENTOS PSICOLÓGICOS
+### 📌 INSTRUÇÕES PARA GERAÇÃO DE DOCUMENTO PSICOLÓGICO
 
-🔹 *Objetivo Geral:*  
-O ChatGPT deve seguir *rigorosamente* o modelo de documento abaixo, respeitando sua estrutura, linguagem, campos e formatação, com base única e exclusivamente na transcrição da consulta fornecida.
-Tente reconhecer os titulos, subtitulos, e paragrafos dando enfase diferenciada pros itens que precisam, com objetivo de formatar o texto 
-de forma clara e objetiva
+🔹 *Objetivo:*  
+Gerar um documento profissional, estruturado e fiel ao modelo indicado, utilizando as informações fornecidas a seguir.
+
 ---
 
-## 📍 1. MODELO A SER UTILIZADO
+## 📍 1. MODELO BASE
 
-🧾 Modelo selecionado (extraído da base de conhecimento):
+Você recebeu um modelo de relatório psicológico. 
+Substitua todos os campos entre colchetes pelos dados fornecidos:
 
+- Nome do paciente: ${paciente}
+- Psicólogo: ${psicologo}
+- CRP: ${crp}
+
+
+Use a transcrição a seguir para preencher as seções descritivas:
+
+"${mensagem}"
+
+Instruções:
+1. Substitua todos os colchetes pelos dados reais.
+2. Complete "Descrição da Demanda", "Procedimentos", "Análise" e "Conclusão" com informações coerentes extraídas da transcrição.
+3. Adicione uma seção de Observações Complementares e Fontes utilizadas, se aplicável.
+4. Mantenha o formato, títulos e espaçamento do modelo original.
+5. Retorne apenas o documento final completo, pronto para uso.
+
+
+🧾 **Modelo de Documento (extraído da base de conhecimento):**  
 ${model}
 
 ---
 
-## 📍 2. FUNCIONAMENTO GERAL
+## 📍 2. DADOS FIXOS A SEREM INSERIDOS AUTOMATICAMENTE
 
-Com base no modelo acima e na transcrição da sessão abaixo, gere o documento solicitado:
+- 👤 **Nome do Paciente:** ${paciente}
+- 🧠 **Psicólogo Responsável:** ${psicologo}
+- 🪪 **CRP:** ${crp}
+- 📅 **Fonte de conteúdo:** Transcrição da sessão abaixo
 
-🗣️ **Transcrição da Sessão**  
+Esses dados devem aparecer nos campos correspondentes do modelo, **sem alterações, variações de nome ou reinterpretações**.  
+Se o modelo não tiver campos explícitos para esses dados, **adicione-os na seção de identificação**.
+
+---
+
+## 📍 3. CONTEÚDO PRINCIPAL
+
+Com base na transcrição da sessão a seguir, preencha integralmente o modelo acima:
+
+🗣️ **Transcrição da Sessão:**  
 """  
 ${mensagem}  
 """
 
-✅ Diretrizes:
+---
 
-- Siga a estrutura, linguagem e organização do modelo exatamente como está.
-- Preencha cada campo com dados reais da transcrição.
-- Não invente informações: se algo não estiver presente na sessão, escreva: **"Nada consta na consulta."**
-- Utilize o DSM-5 ou CID-11 quando necessário para diagnósticos.
-- Adicione um campo final de **"Observações Complementares"**, se aplicável.
-- Finalize com uma nota ética e de responsabilidade profissional.
+## 📍 4. DIRETRIZES DE FORMATAÇÃO E CONDUTA
+
+- Mantenha a **estrutura original** do modelo, incluindo títulos, subtítulos e divisões de seções.  
+- Preencha cada campo de acordo com a transcrição, e insira os dados fixos onde couber.  
+- Caso alguma informação não esteja presente, escreva: **“Nada consta na consulta.”**  
+- Utilize terminologia técnica conforme o **DSM-5** ou **CID-11**, se pertinente.  
+- Ao final, adicione (se aplicável) uma seção de **“Observações Complementares”**.  
+- Finalize com uma **nota ética** de responsabilidade profissional e sigilo.  
+- Formate o texto de modo claro, com ênfase e espaçamento adequados para leitura clínica.
 
 ---
 
-## 📍 3. TIPOS DE DOCUMENTOS SUPORTADOS (referência para entendimento)
+## 📍 5. FINALIZAÇÃO
 
-- **RBT:** Relatório Base Terapêutico
-- **TRT:** Transcrição Rica Terapêutica
-- **DTP:** Devolutiva de Triagem Psicológica
-- **AV:** Avaliação Psicológica
-- **RN:** Resumo Neuropsicológico
-- **Laudo:** Laudo Psicológico
-- **Encaminhamento:** Encaminhamento Psicológico
-- **Anamnese:** Anamnese Psicológica
-- **Plano Terapêutico:** Estruturação do Plano Terapêutico
+Retorne **apenas o documento final completo**, pronto para uso, sem explicações adicionais.
 
-⚠ O modelo utilizado agora é: **${model.split('\n')[0].slice(0, 80)}...** (recortado para controle visual)
-
----
-
-## 📍 4. LEMBRETES FINAIS
-
-- 🔒 LGPD: Não inclua dados sensíveis não autorizados.
-- 🎓 Validação Profissional: O conteúdo deve estar adequado ao código de ética do psicólogo.
-- ✍️ Responda com o documento gerado pronto para ser utilizado, sem explicações adicionais.
+⚠️ **Reforce:** Todos os campos de identificação devem conter:
+- Nome do paciente: *${paciente}*  
+- Psicólogo responsável: *${psicologo}*  
+- CRP: *${crp}*  
 
 `.trim();
 }

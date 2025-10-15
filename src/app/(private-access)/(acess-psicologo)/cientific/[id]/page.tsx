@@ -7,7 +7,6 @@ import { FaRobot } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { HiDocumentCheck } from "react-icons/hi2";
-import Image from "next/image";
 import { example1, example2, example3 } from "@/app/util/books";
 
 
@@ -18,13 +17,14 @@ import livro3 from '../../../../../assets/books/book3.jpg';
 
 
 import mammoth from "mammoth";
-import { showErrorMessage, showPersistentLoadingMessage, showSuccessMessage, updateToastMessage } from "@/app/util/messages";
+import { showErrorMessage, showInfoMessage, showPersistentLoadingMessage, showSuccessMessage, updateToastMessage } from "@/app/util/messages";
 
 interface Docs {
   id: string;
   name: string;
   psicologoId: string;
   prompt: string;
+  tool: string;
 }
 
 
@@ -74,6 +74,8 @@ const BaseCientifica = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [docs, setDocs] = useState<Docs[]>([]);
+
+  const [label,setLabel] = useState('');
   
   
 
@@ -86,7 +88,7 @@ const BaseCientifica = () => {
     let text = "";
     try {
       if (ext === "pdf") {
-        alert("⚠️ Aviso: pdf-lib não extrai texto nativamente. Prefira arquivos .txt ou .docx para melhor resultado.");
+        showErrorMessage("⚠️ PDF não suportado, utilize TXT ou DOCX. avisaremos quadndo estiver disponível.");
       } else if (ext === "txt") {
         text = await file.text();
       } else if (ext === "docx") {
@@ -94,13 +96,13 @@ const BaseCientifica = () => {
         const result = await mammoth.extractRawText({ arrayBuffer });
         text = result.value;
       } else {
-        alert("Formato não suportado, TXT ou DOCX.");
+        showErrorMessage("Formato não suportado, TXT ou DOCX.");
         return;
       }
       setCustomPrompt(text);
     } catch (err) {
       console.error("Erro ao ler arquivo:", err);
-      alert("Erro ao ler o conteúdo do arquivo.");
+      showErrorMessage("Erro ao ler o conteúdo do arquivo.");
     }
   };
 
@@ -114,13 +116,13 @@ const BaseCientifica = () => {
         body: formData,
       });
       if (!response.ok) {
-        console.error("Erro ao fazer upload:", await response.text());
+      showErrorMessage("Erro ao fazer upload: " + await response.text());
         return null;
       }
       const { url } = await response.json();
       return url;
     } catch (error) {
-      console.error("Erro na requisição:", error);
+     showErrorMessage("Erro na requisição: "+ error);
       return null;
     }
   };
@@ -152,7 +154,7 @@ const BaseCientifica = () => {
       }
 
       const data = await response.json();
-      alert(data.result);
+    
 
       // Garante que `data.result` seja string
       if (typeof data.result === "string") {
@@ -161,7 +163,7 @@ const BaseCientifica = () => {
         return "";
       }
     } catch (error) {
-      console.error("Erro ao gerar resumo:", error);
+      showErrorMessage("Erro ao gerar resumo: " + error);
       return ''
     }
   };
@@ -171,7 +173,7 @@ const BaseCientifica = () => {
    //salva o livro no banco de dados
   const handleSaveBook = async (resume: string) => {
     if (!fileCapa || !titulo || !autor) {
-      alert("Preencha todos os campos obrigatórios.");
+      showInfoMessage("Preencha todos os campos obrigatórios.");
       return;
     }
     const capaUrl = await enviarCapa(fileCapa);
@@ -219,7 +221,7 @@ const BaseCientifica = () => {
       if (!response.ok) throw new Error();
       setDocs(prev => prev.filter(doc => doc.id !== bookId));
     } catch (err) {
-      alert("Erro ao deletar livro.");
+     showErrorMessage("Erro ao deletar livro.");
     }
   };
 
@@ -227,7 +229,7 @@ const BaseCientifica = () => {
   //salva os modelos de documentos no banco
   const handleSavedocModel = async () => {
     if (!docName.trim() || !customPrompt.trim() || !id) {
-      alert("Preencha todos os campos obrigatórios.");
+     showInfoMessage("Preencha todos os campos obrigatórios.");
       return;
     }
 
@@ -237,9 +239,10 @@ const BaseCientifica = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: docName.trim(),
+          name: label,
           psicologoId: id,
-          prompt: customPrompt.trim()
+          prompt: customPrompt.trim(),
+          tool: docName.trim()
         })
       });
 
@@ -291,7 +294,7 @@ const BaseCientifica = () => {
       if (!response.ok) throw new Error();
       setDocs(prev => prev.filter(doc => doc.id !== docId));
     } catch (err) {
-      alert("Erro ao deletar documento.");
+      showErrorMessage("Erro ao deletar Documento, não é possível deletar documentos padrão.");
     }
   };
 
@@ -328,6 +331,7 @@ const limpaLivro = () => {
  setCapaPreview(null);
  setTitulo("");
  setAutor("");
+ setLabel('')
 
 }
 
@@ -513,9 +517,10 @@ const limpaLivro = () => {
               <div
                 key={doc.id}
                 className="flex items-center gap-2 bg-[#E6FAF6] text-[#33564F] text-sm font-medium px-3 py-2 rounded-lg shadow-sm transition hover:bg-[#CFF5EB]"
+               title={doc.tool}
               >
-                <HiDocumentCheck size={18} />
-                <span>{doc.name}</span>
+                <HiDocumentCheck size={18} title={doc.tool} />
+                <span  title={doc.tool}>{doc.name}</span>
                 <span
                   onClick={() => handleDelete(doc.id)}
                   className="ml-2 cursor-pointer text-red-500 hover:text-white bg-red-100 hover:bg-red-600 rounded-full px-2 py-1 text-xs font-semibold transition"
@@ -529,6 +534,13 @@ const limpaLivro = () => {
           {/* Formulário adicionar documento */}
           <div className="bg-[#0F1113] rounded-xl shadow-md p-4 space-y-3 text-white">
             <h3 className="text-lg font-semibold text-[#55FF00]">Adicionar novo Modelo de Documento</h3>
+            <input
+              type="text"
+              value={label}
+              onChange={(e) => setLabel(e.target.value)}
+              placeholder='Escolha uma sigla com no maximo 3 letras para o documento: ex: RM, PP, LP, DC'
+              className="border border-[#33564F] p-2 rounded w-full bg-[#E6FAF6] text-black"
+            />
             <input
               type="text"
               value={docName}

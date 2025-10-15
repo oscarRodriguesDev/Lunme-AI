@@ -25,6 +25,8 @@ export default function TranscriptionModal({ isOpen, onClose, transcription }: M
   const [selecionado, setSelecionado] = useState<string>('');
   const [idpaciente, setIdPaciente] = useState<string>('');
 
+  const formattedHtml = htmlContent.replace(/\n/g, '<br />');
+
   useEffect(() => {
     if (transcription) {
       const cleanMarkdown = transcription.replace(/\\n/g, '\n');
@@ -165,7 +167,8 @@ export default function TranscriptionModal({ isOpen, onClose, transcription }: M
       yPos += lineHeight;
     }
 
-    doc.save("DPT.pdf");
+    //salvando como nome direrenciado
+    doc.save(`relatorio_${new Date().toISOString().split('T')[0]}.pdf`);
 
   }
 
@@ -286,7 +289,7 @@ export default function TranscriptionModal({ isOpen, onClose, transcription }: M
       });
     };
 
-    // Cabeçalho do PDF
+    //Cabeçalho do PDF
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.text("Transcrição da Sessão", marginLeft, yPos);
@@ -300,11 +303,11 @@ export default function TranscriptionModal({ isOpen, onClose, transcription }: M
       yPos += lineHeight;
     }
 
-    doc.save("DPT.pdf");
+    doc.save(`relatorio_${new Date().toISOString().split('T')[0]}.pdf`);
   }
 
 
-//save transcription
+  //save transcription
   async function saveTranscription(id: string) {
     const formattedTranscription = `*--${new Date().toLocaleString()}\n${htmlContent.trim()}--*\n`;
 
@@ -362,70 +365,72 @@ export default function TranscriptionModal({ isOpen, onClose, transcription }: M
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm z-50">
-    <div className="bg-[#0F1113] p-6 rounded-2xl shadow-2xl max-w-3xl w-full relative border-2 border-[#55FF00] text-[#E6FAF6]">
-  
-      {/* Botão de fechar */}
-      <button
-        className="absolute top-3 right-3 text-[#E6FAF6] hover:text-[#55FF00] text-xl transition"
-        onClick={onClose}
-      >
-        ✖
-      </button>
-  
-      {/* Conteúdo da transcrição */}
-      <div
-        id="transcription-content"
-        className="prose max-h-[70vh] overflow-y-auto text-[#E6FAF6]"
-        dangerouslySetInnerHTML={{ __html: htmlContent }}
-      />
-  
-      {/* Botões de ação */}
-      <div className="mt-6 flex flex-col sm:flex-row justify-end sm:items-center gap-3">
-  
+      <div className="bg-[#0F1113] p-6 rounded-2xl shadow-2xl max-w-3xl w-full relative border-2 border-[#55FF00] text-[#E6FAF6]">
+
+        {/* Botão de fechar */}
         <button
-          onClick={handleSavePDF2}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition"
+          className="absolute top-3 right-3 text-[#E6FAF6] hover:text-[#55FF00] text-xl transition"
+          onClick={onClose}
         >
-          Baixar PDF
+          ✖
         </button>
-  
-        <div className="relative">
+
+
+   <div
+  id="transcription-content"
+  className="prose prose-invert max-h-[70vh] overflow-y-auto p-4 bg-[#0F1F1E]/80 rounded-lg shadow-inner text-[#E6FAF6] scrollbar-thin scrollbar-thumb-[#4FD1C5]/70 scrollbar-track-[#0F1F1E]/50"
+  dangerouslySetInnerHTML={{ __html: formattedHtml }}
+/>
+
+
+
+        {/* Botões de ação */}
+        <div className="mt-6 flex flex-col sm:flex-row justify-end sm:items-center gap-3">
+
           <button
-            onClick={() => setAberto(!aberto)}
-            className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition"
+            onClick={handleSavePDF2}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition"
           >
-            Selecione seu paciente
+            Baixar PDF
           </button>
-  
-          {aberto && (
-            <select
-              className="absolute mt-2 bg-[#0F1113] text-[#E6FAF6] border border-[#55FF00] rounded-md p-2 w-full z-10"
-              value={selecionado}
-              onChange={(e) => {
-                setSelecionado(e.target.value);
-                setAberto(false);
-                setIdPaciente(e.target.value);
-              }}
+
+          <div className="relative">
+            <button
+              onClick={() => setAberto(!aberto)}
+              className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition"
             >
-              <option value="">Selecione</option>
-              {pacientes.map((paciente) => (
-                <option key={paciente.id} value={paciente.id}>
-                  {paciente.nome}
-                </option>
-              ))}
-            </select>
-          )}
+              Selecione seu paciente
+            </button>
+
+            {aberto && (
+              <select
+                className="absolute mt-2 bg-[#0F1113] text-[#E6FAF6] border border-[#55FF00] rounded-md p-2 w-full z-10"
+                value={selecionado}
+                onChange={(e) => {
+                  setSelecionado(e.target.value);
+                  setAberto(false);
+                  setIdPaciente(e.target.value);
+                }}
+              >
+                <option value="">Selecione</option>
+                {pacientes.map((paciente) => (
+                  <option key={paciente.id} value={paciente.id}>
+                    {paciente.nome}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <button
+            className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-md transition"
+            onClick={() => saveTranscription(idpaciente)}
+          >
+            Salvar transcrição
+          </button>
         </div>
-  
-        <button
-          className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-md transition"
-          onClick={() => saveTranscription(idpaciente)}
-        >
-          Salvar transcrição
-        </button>
       </div>
     </div>
-  </div>
-  
+
   );
 }

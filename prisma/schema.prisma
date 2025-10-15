@@ -200,6 +200,7 @@ model model_doc {
   criado_em    DateTime @default(now())
   psicologoId  String
   prompt        String
+  tool          String?
   }
 
 //livros

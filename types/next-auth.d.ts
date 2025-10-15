@@ -9,7 +9,8 @@ declare module "next-auth" {
       id: string;
       name: string;
       email: string;
-      role: UserRole; // Agora tipado como UserRole, que é a enum do Prisma
+      role: UserRole;
+      crp:string 
     };
   }
 

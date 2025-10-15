@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import { FaBrain, FaDochub, FaEraser, FaFilePdf, FaStop, FaWalking, FaSave } from "react-icons/fa";
 import { HiDocumentMagnifyingGlass } from "react-icons/hi2";
-
+import { useSession } from "next-auth/react";
 import { RiPlayList2Fill } from "react-icons/ri";
 import TranscriptionModal from "./modalTranscription";;
 import { showErrorMessage, showPersistentLoadingMessage, showSuccessMessage, updateToastMessage, } from "../../../../util/messages";
@@ -85,6 +85,9 @@ export default function LiveTranscription({ usuario, mensagem, sala }: LiveTrans
   const [selecionado, setSelecionado] = useState<string>('');
   const [idpaciente, setIdPaciente] = useState<string>('');
 
+const user= useSession();
+const psicologo = user.data?.user?.name || 'N/A';
+const crp =  user.data?.user?.crp || 'N/A';
 
 
  
@@ -339,7 +342,10 @@ function getBasedBooks(livros: Livro[]) {
         },
         body: JSON.stringify({
            message: mensagem,
-           prompt:prompt
+           prompt:prompt,
+           nomePaciente: 'Pedro',
+           nomePsicologo: 'João Silva', //aqui tem que vim o nome do psicologo logado
+           crpPsicologo: '12345' //aqui tem que vim o crp do psicologo logado
           }),
         signal: controller.signal,
       });
@@ -359,8 +365,8 @@ function getBasedBooks(livros: Livro[]) {
       return respostaGPT;
 
     } catch (error) {
-      showErrorMessage("Erro ao buscar insights: " + error);
-      return "Erro ao obter resposta.";
+      showErrorMessage("Ocorreu um erro! " + error);
+      return ;
     }
   };
 
