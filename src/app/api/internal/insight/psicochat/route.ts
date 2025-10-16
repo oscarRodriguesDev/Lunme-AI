@@ -58,8 +58,13 @@ export async function POST(req: Request) {
     });
 
     const content = completion.choices[0]?.message?.content || "Sem resposta.";
+    try{
 
-    await useCredit(userId, 1)
+      await useCredit(userId, 1)
+    }catch(err){
+      return NextResponse.json({ error: "Creditos insuficientes ou invalidos, favor verificar seu saldo: " + err }, { status: 400 });
+    }
+  
     return NextResponse.json({ response: content });
 
   } catch (error: any) {

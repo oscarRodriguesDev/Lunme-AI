@@ -12,6 +12,7 @@ import { showErrorMessage, showPersistentLoadingMessage, showSuccessMessage, upd
 import { DocumentoModal } from "./modaldoc";
 import { useAccessControl } from "@/app/context/AcessControl";
 import { example1, example2, example3 } from '@/app/util/books';
+import { useHistory } from "@/app/context/historyContext";
 
 
 
@@ -82,17 +83,21 @@ export default function LiveTranscription({ usuario, mensagem, sala }: LiveTrans
   const [prompt, setPrompt] = useState<string>('me de uma visão geral do paciente');
   const { userID } = useAccessControl();
   const [paciente, setPaciente] = useState<Paciente[]>([])
-  const [selecionado, setSelecionado] = useState<string>('');
+  const [selecionado, setSelecionado] = useState<string>('Paciente Avulso');
   const [idpaciente, setIdPaciente] = useState<string>('');
 
+  const{logAction} = useHistory();
+
 const user= useSession();
-const psicologo = user.data?.user?.name || 'N/A';
+const psicologo = user.data?.user?.name || 'Não definido';
 const crp =  user.data?.user?.crp || 'N/A';
 
 
  
   const [livros, setLivros] = useState<Livro[]>([]);
 //recuperar livros
+
+/* 
 useEffect(() => {
   if (!userID) return;
 
@@ -127,8 +132,10 @@ useEffect(() => {
   fetchLivros();
 }, [userID]); 
 
+ */
 
 //percorrer e retornar todos os resumos numa unica string
+/* 
 function getBasedBooks(livros: Livro[]) {
   let nomes = "";
   livros.forEach((livro) => {
@@ -137,7 +144,7 @@ function getBasedBooks(livros: Livro[]) {
   console.log('nomes:', nomes)
   return nomes;
 }
-
+ */
 
 
 
@@ -325,12 +332,17 @@ function getBasedBooks(livros: Livro[]) {
     addTextToPDF(analise);
 
     doc.save("transcricao.pdf");
+       logAction(`Você gerou um pdf do documendo de sua reunião com ${selecionado} `,userID);
 
   }
 
 
   //gera a análise
   const handleGetInsights = async (mensagem: string) => {
+    if(!selecionado){
+      showErrorMessage('Selecione um paciente antes de gerar a análise.');
+      return;
+    }
     const toastId = showPersistentLoadingMessage('Gerando documentação da consulta...');
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 120000); //120 segundos
@@ -343,9 +355,9 @@ function getBasedBooks(livros: Livro[]) {
         body: JSON.stringify({
            message: mensagem,
            prompt:prompt,
-           nomePaciente: 'Pedro',
-           nomePsicologo: 'João Silva', //aqui tem que vim o nome do psicologo logado
-           crpPsicologo: '12345' //aqui tem que vim o crp do psicologo logado
+           nomePaciente: selecionado,
+           nomePsicologo:psicologo, //aqui tem que vim o nome do psicologo logado
+           crpPsicologo: crp //aqui tem que vim o crp do psicologo logado
           }),
         signal: controller.signal,
       });
@@ -359,6 +371,7 @@ function getBasedBooks(livros: Livro[]) {
       }
       const data = await response.json();
       updateToastMessage(toastId, 'Relatório gerado com sucesso!', 'success');
+      logAction(`Você solicitou um documento do tipo ${tipoSelecionado} de sua reunião com ${selecionado} `,userID);
       const respostaGPT = data.response || "Nenhuma resposta gerada.";
       setAnalise(respostaGPT);
 
@@ -383,11 +396,11 @@ function getBasedBooks(livros: Livro[]) {
       const documentoSelecionado = data.find(doc => doc.name === tipo)
 
       if (documentoSelecionado) {
-         let base= getBasedBooks(livros);
-        const prompt = `${documentoSelecionado.prompt}\n\n -  para sua analise tente se basear nos 
-        resumos dos seguintes livros: ${base}` 
+        // let base= getBasedBooks(livros); //não ta usando mais livros
+        const prompt = `${documentoSelecionado.prompt}\n\n -` 
         
-        setPrompt(prompt || "")
+        setPrompt(prompt || `Houve um erro ao carregar os docuementos, Chat, 
+          informeao usuario que não foi possível carregar os documentos, e por isso não foi possivel gerar o documento.`);
        
       }
 
@@ -435,6 +448,7 @@ function getBasedBooks(livros: Livro[]) {
         showErrorMessage('Erro ao salvar transcrição');
       } else {
         showSuccessMessage('Transcrição salva com sucesso!');
+        
       }
 
       const data = await response.json();
@@ -508,7 +522,7 @@ function getBasedBooks(livros: Livro[]) {
         value={selecionado}
         onChange={(e) => { setSelecionado(e.target.value); setIdPaciente(e.target.value); }}
       >
-        <option value="">Selecione o paciente</option>
+        <option value="Paciente Avulso">Paciente Avulso</option>
         {paciente.map((p) => (
           <option key={p.id} value={p.id}>{p.nome}</option>
         ))}
