@@ -517,7 +517,7 @@ function getBasedBooks(livros: Livro[]) {
       </div>
   
       {/* Select estilizado */}
-      <select
+     {/*  <select
         className="mt-3 bg-[#0F1113] text-[#E6FAF6] border border-[#55FF00] text-sm rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#55FF00] transition"
         value={selecionado}
         onChange={(e) => { setSelecionado(e.target.value); setIdPaciente(e.target.value); }}
@@ -526,7 +526,27 @@ function getBasedBooks(livros: Livro[]) {
         {paciente.map((p) => (
           <option key={p.id} value={p.id}>{p.nome}</option>
         ))}
-      </select>
+      </select> */}
+
+      {/* Campo híbrido: datalist */}
+<input
+  list="lista-pacientes"
+  className="mt-3 bg-[#0F1113] text-[#E6FAF6] border border-[#55FF00] text-sm rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#55FF00] transition w-full"
+  placeholder="Digite ou selecione um paciente"
+  value={selecionado}
+  onChange={(e) => {
+    setSelecionado(e.target.value);
+    setIdPaciente(e.target.value);
+  }}
+/>
+
+<datalist id="lista-pacientes">
+  <option value="Paciente Avulso" />
+  {paciente.map((p) => (
+    <option key={p.id} value={p.nome} />
+  ))}
+</datalist>
+
   
       {/* Botões de ação */}
       <div className="grid grid-cols-4 gap-2 mt-4">
